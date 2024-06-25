@@ -1,2 +1,13 @@
-/myenv
 /.git
+/db.sqlite3
+__pycache__/
+*.pyc
+*.log
+*.pot
+
+#Environment
+.env
+.venv
+env/
+venv/
+/myenv
