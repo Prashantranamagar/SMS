@@ -13,7 +13,7 @@ Web Application for managing student.
 - Python 
 - Django
 
-## Installation
+## Installation with virtualenv
 
 1. Clone the repository:
   
@@ -66,3 +66,27 @@ Web Application for managing student.
     ```
     python manage.py runserver
     ```
+
+
+
+## Installation with Docker Compose
+
+### Prerequisites
+
+- Docker
+- Docker Compose
+
+1. **Clone the repository:**
+
+    ```bash
+    git clone https://github.com/Prashantranamagar/SMS.git
+    cd SMS
+    ```
+
+2. **Build and run the Docker containers:**
+
+    ```bash
+    docker compose up --build
+    ```
+
+   The application will be accessible at `http://localhost:8000`.
