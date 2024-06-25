@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    /* Add any additional styles here */
+</style>
+
+<div class="container d-flex justify-content-center align-items-center vh-90">
+    <div class="card signup-card shadow-sm p-4 my-5">
+        <h2 class="card-title text-center mb-4">Sign Up</h2>
+        <form method="post">
+            {% csrf_token %}
+            {% load crispy_forms_tags %}
+            {% crispy form %}
+
+        </form>
+    </div>
+</div>
+{% endblock %}
