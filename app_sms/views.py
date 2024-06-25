@@ -63,7 +63,8 @@ class StudentListView(ListView):
         query = self.request.GET.get('q')
         if query:
             queryset = queryset.filter(
-                Q(name__icontains=query) |
+                Q(first_name__icontains=query) |
+                Q(last_name__icontains=query) |
                 Q(email__icontains=query) 
             )
         return queryset
@@ -112,6 +113,7 @@ class CourseListView(ListView):
         if query:
             queryset = queryset.filter(
                 Q(course_name__icontains=query) |
+                Q(description__icontains=query) |
                 Q(course_code__icontains=query) 
             )
         return queryset
@@ -159,8 +161,10 @@ class EnrollmentListView(ListView):
         query = self.request.GET.get('q')
         if query:
             queryset = queryset.filter(
-                Q(student__icontains=query) |
-                Q(course__icontains=query) 
+                Q(student__first_name__icontains=query) |
+                Q(student__last_name__icontains=query) |
+                Q(grade__icontains=query) |
+                Q(course__course_name__icontains=query) 
             )
         return queryset
 
@@ -206,10 +210,12 @@ class InstructorListView(ListView):
         queryset = super().get_queryset()
         query = self.request.GET.get('q')
         if query:
-            queryset = queryset.filter(
+             queryset = queryset.filter(
                 Q(first_name__icontains=query) |
-                Q(last_name__icontains=query) 
-            )
+                Q(last_name__icontains=query) |
+                Q(courses__course_name__icontains=query) |
+                Q(email__icontains=query)
+            ).distinct()
         return queryset
 
     def get_context_data(self, **kwargs):
