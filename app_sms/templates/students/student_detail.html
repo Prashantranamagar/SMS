@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %} Student Detail {% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="card-title">Student Detail</h1>
+                    <p><strong>First Name:</strong> {{ student.first_name }}</p>
+                    <p><strong>Last Name:</strong> {{ student.last_name }}</p>
+                    <p><strong>Email:</strong> {{ student.email }}</p>
+
+                    <div class="text-center">
+                        <a href="{% url 'student-update' student.pk %}" class="btn btn-warning mx-2">Edit</a>
+                        <a href="{% url 'student-delete' student.pk %}" class="btn btn-danger mx-2 btn-sm">Delete</a>
+                        <a href="{% url 'student-list' %}" class="btn btn-secondary mx-2">Back to List</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

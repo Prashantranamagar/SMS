@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block title %}
+Student List
+{% endblock %}
+
+{% block content %}
+<!-- Display Students -->
+<div class="container mt-5">
+    <h3>Students</h3>
+    <div class="row mb-2 mt-4">
+        <!-- Search Form -->
+        <div class="col-md-4">
+            <form method="GET" action="{% url 'student-list' %}">
+                <div class="input-group">
+                    <input type="text" class="form-control me-2" placeholder="Search students..." name="q" value="{{ query }}">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit">Search</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- Add Student Button -->
+        <div class="col-md-8 text-end">
+            <a href="{% url 'student-create' %}" class="btn btn-outline-primary">Add Student</a>
+        </div>
+    </div>
+    <table class="table align-middle mb-0 bg-white">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+            <tr>
+                <td>
+                    <p class="fw-bold mb-1">{{ student.id }}</p>
+                </td>
+                <td>
+                    <a href="{% url 'student-detail' student.pk %}" class="fw-normal mb-1">{{ student.first_name }}</a>
+                </td>
+                <td>
+                    <p class="fw-normal mb-1">{{ student.last_name }}</p>
+                </td>
+                <td>
+                    <p class="fw-normal mb-1">{{ student.email }}</p>
+                </td>
+                <td>
+                    <a href="{% url 'student-update' student.pk %}" class="btn btn-warning btn-sm me-1">Edit</a>
+                    <a href="{% url 'student-delete' student.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No students found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% if is_paginated %}
+    <nav aria-label="Page navigation" class="mt-4">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?q={{ query }}&page=1">&laquo; First</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?q={{ query }}&page={{ page_obj.previous_page_number }}">&lsaquo; Previous</a>
+            </li>
+            {% endif %}
+
+            <li class="page-item disabled">
+                <span class="page-link">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                </span>
+            </li>
+
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?q={{ query }}&page={{ page_obj.next_page_number }}">Next &rsaquo;</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?q={{ query }}&page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+</div>
+{% endblock %}

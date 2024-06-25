@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}
+{{ form.instance.pk|yesno:"Edit Student,Create Student" }}
+{% endblock %}
+
+{% block content %}
+
+    <div class="row justify-content-center py-5">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="card-title mb-4">{{ form.instance.pk|yesno:"Edit Student,Create Student" }}</h1>
+                    <form method="post" action="{% if form.instance.pk %}{% url 'student-update' form.instance.pk %}{% else %}{% url 'student-create' %}{% endif %}">
+                        {% csrf_token %}
+                        {% load crispy_forms_tags %}
+                        {{ form|crispy }}
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-primary mx-2">Save</button>
+                            <a href="{% url 'student-list' %}" class="btn btn-secondary mx-2">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+
+
+
+
+
+<!-- templates/student_form.html -->
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ form.instance.pk|yesno:"Edit Student,Create Student" }}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h1>{{ form.instance.pk|yesno:"Edit Student,Create Student" }}</h1>
+    <form method="post" action="{% if form.instance.pk %}{% url 'student-update' form.instance.pk %}{% else %}{% url 'student-create' %}{% endif %}">
+        {% csrf_token %}
+        {% load crispy_forms_tags %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a href="{% url 'student-list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+</body>
+</html> -->
