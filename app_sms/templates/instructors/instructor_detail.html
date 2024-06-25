@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %} Instructor Details {% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                   
+                    <h1 class="card-title">Instructor Details</h1>
+                    <p class="card-text"><strong>First Name:</strong> {{ instructor.first_name }}</p>
+                    <p class="card-text"><strong>Last Name:</strong> {{ instructor.last_name }}</p>
+                    <p class="card-text"><strong>Email:</strong> {{ instructor.email }}</p>
+                    <p class="card-text"><strong>Courses:</strong> {{ instructor.course }}</p>
+
+
+                    <div class="text-center">
+                        <a href="{% url 'instructor-update' object.pk %}" class="btn btn-warning mx-2">Edit</a>
+                        <a href="{% url 'instructor-delete' object.pk %}" class="btn btn-danger mx-2">Delete</a>
+                        <a href="{% url 'instructor-list' %}" class="btn btn-secondary mx-2">Back to List</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

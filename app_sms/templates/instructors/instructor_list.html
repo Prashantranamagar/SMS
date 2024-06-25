@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block title %}
+Instructor List
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h3>Instructors</h3>
+    <div class="row mb-2 mt-4">
+        <!-- Search Form -->
+        <div class="col-md-4">
+            <form method="GET" action="{% url 'instructor-list' %}">
+                <div class="input-group">
+                    <input type="text" class="form-control me-2" placeholder="Search instructors..." name="q" value="{{ query }}">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit">Search</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- Add Instructor Button -->
+        <div class="col-md-8 text-end">
+            <a href="{% url 'instructor-create' %}" class="btn btn-outline-primary">Add Instructor</a>
+        </div>
+    </div>
+    <table class="table align-middle mb-0 bg-white">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Courses</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for instructor in instructors %}
+            <tr>
+                <td>
+                    <p class="fw-bold mb-1">{{ instructor.id }}</p>
+                </td>
+                <td>
+                    <a href="{% url 'instructor-detail' instructor.pk %}" class="fw-normal mb-1">{{ instructor.first_name }}</a>
+                </td>
+                <td>
+                    <p class="fw-normal mb-1">{{ instructor.last_name }}</p>
+                </td>
+                <td>
+                    <p class="fw-normal mb-1">{{ instructor.email }}</p>
+                </td>
+                <td>
+                    <p class="fw-normal mb-1">
+                        {% for course in instructor.courses.all %}
+                        <a href="{% url 'course-detail' course.id %}">{{ course.course_name }},</a>
+                        {% endfor %}
+                    </p>
+                </td>
+                <td>
+                    <a href="{% url 'instructor-update' instructor.pk %}" class="btn btn-warning btn-sm me-1">Edit</a>
+                    <a href="{% url 'instructor-delete' instructor.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">No instructors found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% if is_paginated %}
+    <nav aria-label="Page navigation" class="mt-4">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?q={{ query }}&page=1">&laquo; First</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?q={{ query }}&page={{ page_obj.previous_page_number }}">&lsaquo; Previous</a>
+            </li>
+            {% endif %}
+
+            <li class="page-item disabled">
+                <span class="page-link">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                </span>
+            </li>
+
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?q={{ query }}&page={{ page_obj.next_page_number }}">Next &rsaquo;</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?q={{ query }}&page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+
+</div>
+{% endblock %}
