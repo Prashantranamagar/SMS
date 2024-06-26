@@ -67,6 +67,8 @@ Web Application for managing student.
     python manage.py runserver
     ```
 
+    The application will be accessible at http://localhost:8000.
+
 
 
 ## Installation with Docker Compose
